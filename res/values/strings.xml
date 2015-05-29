@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">IMA</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="login_info">Login pls</string>
+    <string name="login_help">מספר ת.ז.</string>
+    <string name="birth">תאריך לידה (DD/MM/YYYY)</string>
+    <string name="pass">סיסמה</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
+    <string name="recover">Recover Password</string>
+    <string name="sms">Send your pass via sms</string>
+    <string name="email">send your password via email</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_play">Play Video</string>
+    <string name="clinic_info">That`s clinic main menu</string>
+    <string name="hospital_info">That`s hospital main menu</string>
+    <string name="add_profile">Add your main profile</string>
+    <string name="add_second">Add your second profile</string>
+    <string name="document1">documents type 1</string>
+    <string name="document2">documents type 2</string>
+    <string name="timeWatch">Your time-watchs</string>
+    <string name="historycalc">Your calculation history</string>
+    <string name="logout">Log out</string>
+    <string name="salary_clinic">App for salary calculation in Clinic</string>
+    <string name="salary_hospital">App for salary calculation in Hospital</string>
+    <string name="congress_app">For congress</string>
+    <string name="coming_soon">new app</string>
+
+
+    <string name="BASE_URL">http://API.ima.org.il/api/</string>
+    <string name="BASE_URL_">http://192.168.2.112:8081/api/</string>
+
+    <string name="service_error_header">Internet connection error!</string>
+    <string name="service_error_message">Test your Internet connection..</string>
+    <string name="title_activity_profile_list">ProfileListActivity</string>
+
+    <array name="sectionTitleGreenForm">
+		<item>פרטים אישיים</item>
+		<item>אינדיקציות וזכאויות לתוספות</item>
+		<item>רפואת כפר</item>
+		<item>נתוני נורמה</item>
+		<item>עבודה נוספת</item>
+		<item>ביקורי בית</item>
+		<item>כוננויות ותורנויות</item>
+		<item>שעות נוספות</item>
+	</array>
+
+	<array name="sectionTitleBlueForm">
+        <item>פרטים אישיים</item>
+        <item>פרטים עפ&quot;&quot;י התלוש</item>
+        <item>תורנויות רגילות</item>
+        <item>חצי תורנויות למומחים ומנהלים</item>
+        <item>שליש תורנויות למומחים צעירים</item>
+        <item>כוננויות מתוכננות</item>
+        <item>כונניויות רופאי מינהל</item>
+        <item>כוננויות מנהלים</item>
+        <item>מודל כוננויות למומחים צעירים בגין התמדה (בונוס)</item>
+        <item>שעות נוספות (מעבר לגלובאליות)</item>
+	</array>
+
+	<string name="sectionHelpItem">לצורך חישוב שכרך, תוכל להזין את כמות העבודה הנוספת</string>
+    <string name="edit_param_dialog_label">Edit parameter</string>
+    <string name="list_param_dialog_label">Chose parameter</string>
+
+	<string name="profile_list_help_text">עדכון פרופיל משני</string>
+	<string name="main_profile_close_action">Close</string>
+	
+	<string name="green_form_header_txt">שכר רופאי הקהילה</string>
+	<string name="blue_form_header_txt">שכר רופאי בתי החולים</string>
+
+	<string name="header_txt">ההסתדרות הרופואית בישראל</string>
+	<string name="header_backbutton_txt">ביטול</string>
+	
+    <string name="header_txt_2">ההסתדרות הרופואית בישראל</string>
+	
+    <string name="calendar_hel_txt">calendar_hel_txt</string>
+	
+	<string name="main_profile_to_panel_label">חישוב</string>
+    <string name="main_profile_to_screen_2_label">לעדכון רכיבי שכר הבסיס</string>
+
+    <string name="header_calendare_savebutton_txt">Save</string>
+
+    <string name="save_calendar_comfirmation_text">Save data?</string>
+    <string name="save_calendar_comfirmation_header_text">Confirm Action</string>
+    
+    <string name="result_list_help_text_line1">תוצאות חישוב השכר</string>
+    <string name="result_list_help_text_line2">*ללא החזר הוצאות, תשלומים לא הסכמיים ותוספות </string>
+</resources>
+

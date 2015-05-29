@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="${relativePackage}.${activityClass}" 
+    android:background="@color/white">
+
+	    <LinearLayout
+		    android:id="@+id/headerLine"
+	        android:layout_width="match_parent"
+	        android:layout_height="26dp"
+	        android:orientation="horizontal"
+	        android:gravity="center_horizontal"
+		    android:background="#006eaf"
+	        >
+			<TextView
+			    android:id="@+id/header_lbl"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:gravity="center"
+			    android:paddingLeft="18dp"
+			    android:text="@string/header_txt"
+			    android:textSize="@dimen/header_lbl_size"
+		        android:textColor="@color/white"
+			     />
+			<ImageView 
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="right"
+			    android:src="@drawable/logo_top_icon"
+			    />
+						
+	    </LinearLayout>
+    
+	<RelativeLayout 
+		    android:id="@+id/roundContainer"
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:layout_margin="30dp"
+		    android:paddingTop="10dp"
+		    android:paddingBottom="30dp"
+			android:layout_below="@+id/headerLine"
+		    android:background="@drawable/green_rounded_rect">
+			
+	    <TextView 
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+	        android:text="נתוני הכניסה זהים לנתוני הכניסה באתר הר&quot;י"
+	        android:padding="8dp"
+	        android:gravity="center_horizontal"
+	        android:textSize="14sp"
+	        android:textColor="#468966"
+	        />
+		    
+		    <EditText
+		            android:id="@+id/edLogin"
+		            android:layout_width="246dp"
+		            android:layout_height="40dp"
+		            android:layout_marginTop="30dp"
+		            android:layout_centerHorizontal="true"
+		            android:hint="@string/login_help" />
+		
+		        <EditText
+		            android:id="@+id/edBirth"
+		            android:layout_width="246dp"
+		            android:layout_height="40dp"
+		            android:layout_centerHorizontal="true"
+		            android:layout_below="@+id/edLogin"
+		            android:hint="@string/birth"
+		            android:inputType="none"  />
+		
+		        
+		
+		        <EditText
+		            android:id="@+id/edPass"
+		            android:layout_width="246dp"
+		            android:layout_height="40dp"
+		            android:layout_centerHorizontal="true"
+		            android:layout_below="@+id/edBirth"
+		            android:hint="@string/pass" >
+		        </EditText>
+		
+				<ImageButton
+		            android:id="@+id/btCancel"
+		            android:layout_width="120dp"
+		            android:layout_height="40dp"
+		            android:layout_below="@+id/edPass"
+		            android:layout_alignLeft="@+id/edPass"
+		            android:layout_centerVertical="true"
+		            android:background="@null"
+		            android:src="@drawable/login_bt_cancel" />
+		
+		        <ImageButton
+		            android:id="@+id/btOk"
+		            android:layout_width="120dp"
+		            android:layout_height="40dp"
+		            android:layout_alignTop="@+id/btCancel"
+		            android:layout_toRightOf="@+id/btCancel"
+		            android:background="@null"
+		            android:clickable="true"
+		            android:src="@drawable/login_bt_ok" />
+	</RelativeLayout>
+
+        <Button
+            android:id="@+id/btRecover"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/roundContainer"
+            android:layout_below="@+id/roundContainer"
+            android:background="@null"
+            android:text="שכחתי סיסמה"
+            android:textColor="#ff0000"
+            android:textSize="12dp" />
+
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="120dp"
+            android:layout_below="@+id/btRecover"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/login_logo" />
+
+</RelativeLayout>

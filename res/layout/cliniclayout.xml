@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+   	android:background="#f8f8f8">
+
+	
+	<include layout="@layout/header_layout_green_form_include"/>    
+
+	
+	<Button
+        android:id="@+id/btMainProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_clinic_1"
+        android:textColor="@color/form_text_color"
+        android:textStyle="bold"
+        android:textSize="@dimen/form_text_size"
+        android:layout_below="@+id/top_header_wrapper"
+        android:layout_marginTop="@dimen/top_align_clinic"
+        android:layout_alignParentRight="true"
+        android:text="פרופיל מקום עבודה ראשי"
+        android:gravity="center_vertical|right"
+        android:paddingRight="@dimen/form_padding_right_text"
+        />
+	    
+
+	<Button
+        android:id="@+id/btSecondProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_clinic_2"
+        android:textColor="@color/form_text_color"
+        android:textStyle="bold"
+        android:textSize="@dimen/form_text_size"
+        android:layout_below="@+id/btMainProfile"
+        android:layout_marginTop="@dimen/margin_between_clinic"
+        android:layout_alignParentRight="true"
+        android:text="פרופיל מקומות עבודה נוספים"
+        android:gravity="center_vertical|right"
+        android:paddingRight="@dimen/form_padding_right_text"
+        />
+
+
+	
+	<Button
+        android:id="@+id/btDocument1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_clinic_3"
+        android:textColor="@color/form_text_color"
+        android:textStyle="bold"
+        android:textSize="@dimen/form_text_size"
+        android:layout_below="@+id/btSecondProfile"
+        android:layout_marginTop="@dimen/margin_between_clinic"
+        android:layout_alignParentRight="true"
+        android:text="הוראות להגדרת פרופיל"
+        android:gravity="center_vertical|right"
+        android:paddingRight="@dimen/form_padding_right_text"
+        />
+
+	<Button
+        android:id="@+id/btDocument2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_clinic_4"
+        android:textColor="@color/form_text_color"
+        android:textStyle="bold"
+        android:textSize="@dimen/form_text_size"
+        android:layout_below="@+id/btDocument1"
+        android:layout_marginTop="@dimen/margin_between_clinic"
+        android:layout_alignParentRight="true"
+        android:text="הבהרות שימוש ביישום"
+        android:gravity="center_vertical|right"
+        android:paddingRight="@dimen/form_padding_right_text"
+        />
+
+	<Button
+        android:id="@+id/btWatchHours"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_clinic_5"
+        android:textColor="@color/form_text_color"
+        android:textStyle="bold"
+        android:textSize="@dimen/form_text_size"
+        android:layout_below="@+id/btDocument2"
+        android:layout_marginTop="@dimen/margin_between_clinic"
+        android:layout_alignParentRight="true"
+        android:text="ניהול שעות עבודה"
+        android:gravity="center_vertical|right"
+        android:paddingRight="@dimen/form_padding_right_text"
+        />
+
+
+		<Button
+        android:id="@+id/btHistoryCalc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_clinic_6"
+        android:textColor="@color/form_text_color"
+        android:textStyle="bold"
+        android:textSize="@dimen/form_text_size"
+        android:layout_below="@+id/btWatchHours"
+        android:layout_marginTop="@dimen/margin_between_clinic"
+        android:layout_alignParentRight="true"
+        android:text="היסטוריית חישובי שכר"
+        android:gravity="center_vertical|right"
+        android:paddingRight="@dimen/form_padding_right_text"
+        />
+
+    
+</RelativeLayout>

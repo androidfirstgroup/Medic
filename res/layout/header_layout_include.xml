@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/top_header_wrapper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+    <LinearLayout
+        android:id="@+id/top_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:orientation="vertical" >
+	    <LinearLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="26dp"
+	        android:orientation="horizontal"
+		    android:background="#006eaf"
+		    android:gravity="center">
+
+			<TextView
+			    android:id="@+id/header_lbl"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:gravity="center"
+			    android:paddingLeft="18dp"
+			    android:text="@string/header_txt"
+			    android:textSize="@dimen/header_lbl_size"
+		        android:textColor="@color/white"
+			     />
+			<ImageView 
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="right"
+			    android:src="@drawable/logo_top_icon"
+			    />
+			
+	    </LinearLayout>
+	    <LinearLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="26dp"
+	        android:orientation="vertical" 
+	        android:background="#589f01">
+   		<TextView
+				android:id="@+id/header_lbl_2"
+				android:gravity="center"
+			    android:textSize="@dimen/header_lbl_size"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="@string/header_txt_2"
+		        android:textColor="@color/white"/>
+   	    </LinearLayout>
+    </LinearLayout>
+    
+	<TextView 
+		android:id="@+id/wrapper_header_backbutton_lbl"
+       	android:paddingLeft="10dp"
+       	android:paddingTop="5dp"
+   		android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+    	android:text="@string/header_backbutton_txt"
+    	android:textColor="@color/white"
+    	android:clickable="true"
+       />
+    
+    <ImageView
+        android:id="@+id/popup_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:clickable="true"
+        android:src="@drawable/menuflatorbutton" />
+</RelativeLayout>
+    

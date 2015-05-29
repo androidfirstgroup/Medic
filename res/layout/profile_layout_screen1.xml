@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+         android:orientation="vertical"
+         android:layout_width="fill_parent" 
+         android:layout_height="fill_parent"
+         android:background="@color/white">
+         
+	<include layout="@layout/header_layout_include"/>    
+
+	<RelativeLayout
+	        android:id="@+id/textContener"
+ 		    android:layout_width="match_parent"
+ 		    android:layout_height="wrap_content" 
+	        android:layout_below="@+id/top_header_wrapper"
+ 		    >
+
+    <TextView
+        android:id="@+id/textLine1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textSize="20sp"
+        android:gravity="center_horizontal"
+        android:textColor="@color/text_color_blue"
+        android:text="עדכון פרופיל – מקום עבודה ראשי" />
+
+    <TextView
+        android:id="@+id/textLine2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="10dp"
+        android:gravity="center_horizontal"
+        android:layout_below="@+id/textLine1"
+        android:textColor="@color/text_color_blue"
+        android:text="בפרופיל זה כבר הוגדרו רכיבי שכר הבסיס. לצורך חישוב
+שכרך, עליך לעדכן כל עבודה נוספת שביצעת, וללחוץ על
+חישוב בתחתית המסך."/>
+    </RelativeLayout>
+
+     <ExpandableListView
+         android:id="@+id/android:list"
+         android:layout_width="fill_parent"
+         android:layout_height="0dp"
+         android:layout_weight="1"
+         android:groupIndicator="@drawable/expander_group"
+         android:scrollbars="vertical" >
+
+     </ExpandableListView>
+
+ 	<RelativeLayout
+ 		    android:id="@+id/bottomPanel1"
+ 		    android:layout_width="match_parent"
+ 		    android:layout_height="wrap_content"
+ 		    android:visibility="visible"
+ 		    android:padding="4dp">
+ 		    
+ 		    <LinearLayout
+	 		    android:id="@+id/screen2Action"
+	 		    android:layout_width="200dp"
+	 		    android:layout_height="40dp"
+	 		    android:orientation="horizontal"
+	 		    android:background="@drawable/orange_rounded_rect"
+	 		    android:clickable="true"
+ 		    />
+			
+ 		    <TextView 
+	 		    android:layout_width="wrap_content"
+	 		    android:layout_height="wrap_content"
+	 		    android:paddingLeft="6dp"
+	 		    android:paddingTop="8dp"
+	 		    android:textSize="18sp"
+	 		    android:textColor="@color/white"
+	 		    android:text="@string/main_profile_to_screen_2_label"
+	        />
+
+ 		    
+ 		    <LinearLayout
+	 		    android:id="@+id/main_profile_panel_action"
+	 		    android:layout_width="60dp"
+	 		    android:layout_height="40dp"
+	 		    android:orientation="horizontal"
+	 		    android:layout_alignParentRight="true"
+	 		    android:background="@drawable/orange_rounded_rect"
+	 		    android:clickable="true"
+ 		    />
+
+ 		    <TextView 
+	 		    android:layout_width="wrap_content"
+	 		    android:layout_height="wrap_content"
+	 		    android:layout_alignParentRight="true"
+	 		    android:paddingRight="6dp"
+	 		    android:paddingTop="8dp"
+	 		    android:textSize="18sp"
+	 		    android:textColor="@color/white"
+	 		    android:text="@string/main_profile_to_panel_label"
+	        />
+ 	</RelativeLayout>
+
+ 	<RelativeLayout
+ 		    android:id="@+id/bottomPanel2"
+ 		    android:layout_width="match_parent"
+ 		    android:layout_height="wrap_content" 
+ 		    android:padding="4dp"
+ 		    android:background="@android:color/transparent"
+ 		    android:visibility="gone">
+ 		    <TextView
+	 		    android:id="@+id/panelBtnSave"
+	 		    android:background="@drawable/gray_rounded_rect"
+	 		    android:layout_width="match_parent"
+	 		    android:layout_height="30dp"
+	 		    android:gravity="center"
+	 		    android:clickable="true"
+	 		    android:textSize="20sp"
+		        android:textColor="@color/text_color_blue"
+	 		    android:text="שמור/י את הנתונים שהוזנו"
+ 		    />
+ 		    <TextView
+	 		    android:id="@+id/panelBtnCalculate"
+	 		    android:background="@drawable/gray_rounded_rect"
+	 		    android:layout_width="match_parent"
+	 		    android:layout_height="30dp"
+	 		    android:layout_marginTop="2dp"
+	 		    android:layout_below="@+id/panelBtnSave"
+	 		    android:gravity="center"
+	 		    android:clickable="true"
+	 		    android:textSize="20sp"
+		        android:textColor="@color/text_color_blue"
+	 		    android:text="חשב את שכרי"/>
+ 		    <TextView
+	 		    android:id="@+id/panelBtnCancel"
+	 		    android:background="@drawable/gray_rounded_rect"
+	 		    android:layout_width="match_parent"
+	 		    android:layout_height="30dp"
+	 		    android:layout_marginTop="8dp"
+	 		    android:layout_below="@+id/panelBtnCalculate"
+	 		    android:gravity="center"
+	 		    android:clickable="true"
+	 		    android:textSize="20sp"
+		        android:textColor="@color/text_color_blue"
+	 		    android:text="ביטול"
+ 		    />
+
+ 	</RelativeLayout>
+ 		    		    
+</LinearLayout>

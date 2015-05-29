@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:background="@drawable/home_source"
+    android:layout_height="fill_parent" >
+    
+        <Button
+	        android:id="@+id/bt_out"
+	        android:textColor="#ff0000" 
+	        android:background="@null"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentRight="true"
+	        android:layout_alignParentTop="true"
+	        android:text="@string/logout" />
+
+        <ImageButton
+            android:id="@+id/btnClinic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/btnHospital"
+            android:layout_alignParentLeft="true"
+            android:background="@null"
+            android:src="@drawable/clinic_button" />
+
+        <ImageButton
+            android:id="@+id/btnHospital"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/btCongress"
+            android:layout_alignParentRight="true"
+            android:background="@null"
+            android:src="@drawable/hospital_button" />
+
+        <ImageButton
+            android:id="@+id/btCongress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginBottom="100dp"
+            android:background="@null"
+            android:src="@drawable/congress_button" />
+        
+
+</RelativeLayout>
+
+
+

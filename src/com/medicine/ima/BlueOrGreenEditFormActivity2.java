@@ -1,0 +1,483 @@
+package com.medicine.ima;
+
+// <copyright file="BlueOrGreenEditFormActivity.java" company="private">
+// Copyright (c) 2014 All Right Reserved, Andreev D.V.
+//
+// THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY 
+// KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+// IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A
+// PARTICULAR PURPOSE.
+//
+// </copyright>
+// <author>Andreev D.V.</author>
+// <email></email>
+// <date>2014-10-22</date>
+// <summary>Medic organization profile</summary>
+
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.ExpandableListActivity;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.res.Resources;
+import android.os.Bundle;
+import android.view.Display;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.ExpandableListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map.Entry;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.medicine.ima.ProfileMap.ProfileParam;
+import com.medicine.ima.calendar.CalendarActivity;
+import com.medicine.ima.jsontasks.GetFormProfileTask;
+import com.medicine.ima.jsontasks.SendFormProfileToServerTask;
+import android.text.InputType;
+import android.text.format.DateFormat;
+import android.util.Log;
+
+public class BlueOrGreenEditFormActivity2 extends ExpandableListActivity implements OnClickListener, IProfile, IProfilePOSTToServer
+{
+    private static final String LOG_TAG = "BlueOrGreenEditFormActivity2";
+    private SocialAdapter expListAdapter;
+    private final Context context = this;
+    private ImageView popup_menu;
+    
+   
+	private String autorisationData;
+
+	Social socialItem;
+	private ArrayList<ArrayList<Social>> socials;
+	
+	private ProfileMap profileMap;
+	private int profileNumber;
+	private int screenIdx;
+	private int form;
+	private TextView btnBack;
+	private LinearLayout saveBtn;
+	private boolean isMain;
+	private String profileName;
+
+
+
+    /** Called when the activity is first created. */
+    @Override
+    public void onCreate(Bundle icicle)
+    {
+        super.onCreate(icicle);
+        setContentView(R.layout.profile_layout_screen2);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        initialize();
+        
+		Bundle bundle = getIntent().getExtras();
+		autorisationData = bundle.getString("autorisationData");
+		profileNumber = bundle.getInt("profileNumber");
+		profileName = bundle.getString("profileName");
+		screenIdx = bundle.getInt("screenIdx");
+		form = bundle.getInt("form");
+		isMain = bundle.getBoolean("isMain", true);
+
+		new GetFormProfileTask(this, autorisationData, profileNumber, profileName, form, isMain).execute();
+    }
+
+
+	private void initialize() {
+		popup_menu = (ImageView) findViewById(R.id.popup_menu);
+ 		popup_menu.setOnClickListener(this);
+ 		saveBtn = (LinearLayout) findViewById(R.id.second_screen_save_btn_action);
+ 		saveBtn.setOnClickListener(this);
+		btnBack = (TextView)findViewById(R.id.wrapper_header_backbutton_lbl);
+		btnBack.setOnClickListener(this);
+	}
+
+
+	public void onContentChanged  () {
+        super.onContentChanged();
+        Log.d( LOG_TAG, "onContentChanged" );
+    }
+
+
+	/*
+	 * 
+	 *		Clicked on expandable list 
+	 *
+	 */
+	@Override
+	public boolean onChildClick(
+            ExpandableListView parent, 
+            View v, 
+            int groupPosition,
+            int childPosition,
+            long id) {
+
+    	socialItem = socials.get(groupPosition).get(childPosition);
+    	if(!socialItem.isClickable()){
+    		return false;
+    	}
+
+    	String key = socialItem.getKey();
+    	final ProfileParam profileParam = profileMap.getProfileParams(form).get(key);
+		
+    	Log.d( LOG_TAG, key);
+
+    	switch (profileParam.typeValue) {
+		case ProfileMap.TYPE_VALUE_STRING:
+		case ProfileMap.TYPE_VALUE_INT:
+		case ProfileMap.TYPE_VALUE_FLOAT:
+		case ProfileMap.TYPE_VALUE_UNIXTYPE:
+			showEditDialog(v, groupPosition, childPosition, profileParam);
+			break;
+
+		case ProfileMap.TYPE_VALUE_INT_LIST:
+		case ProfileMap.TYPE_VALUE_FLOAT_LIST:
+		case ProfileMap.TYPE_VALUE_STRING_LIST:
+		case ProfileMap.TYPE_VALUE_BOOLEAN:
+    		showChoseListDialog(profileParam);
+			break;
+		default:
+			break;
+		}
+		return false;
+
+    }
+
+
+    /*
+     * 
+     * 
+     * Edit Simple Value
+     * 
+     * 
+     */
+    private boolean showEditDialog(View v, final int groupPosition, final int childPosition, final ProfileParam profileParam) {
+    	socialItem = socials.get(groupPosition).get(childPosition);
+    	
+    	//ContextThemeWrapper ctw = new ContextThemeWrapper( this,  R.style.editDialogStyle);
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+		alertDialogBuilder.setTitle(R.string.edit_param_dialog_label);
+
+		final EditText userInput = new EditText(this);
+		userInput.setRawInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+		userInput.setText(socialItem.getValue());
+		alertDialogBuilder.setView(userInput);
+
+
+		// set dialog message
+		alertDialogBuilder
+				.setCancelable(false)
+				.setNegativeButton(android.R.string.cancel,
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog,
+									int id) {
+								dialog.cancel();
+							}
+						})
+				.setPositiveButton(android.R.string.ok,
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog,
+									int id) {
+								// get user input and set it to result
+								// edit text
+								//valueTextView.setText(userInput.getText());
+								if( profileParam.typeValue == ProfileMap.TYPE_VALUE_UNIXTYPE ){
+									profileParam.clearUnixTimeList();
+									BlueOrGreenEditFormActivity2.this.socialItem.clearUnixTime();
+								}
+								BlueOrGreenEditFormActivity2.this.socialItem.setValue(userInput.getText().toString());
+								BlueOrGreenEditFormActivity2.this.expListAdapter.notifyDataSetInvalidated();
+							}
+						});
+
+		AlertDialog alertDialog = alertDialogBuilder.create();
+		alertDialog.show();
+        return false;
+    }
+
+    
+	/*
+	 * 
+	 * Edit Value from List
+	 *     
+	 */
+	private void showChoseListDialog(final ProfileParam profileParam) {
+	final ThemeDialog dialog = new ThemeDialog(this, R.style.editListParamDialog);
+	dialog.setTitle(R.string.list_param_dialog_label);
+
+	ListView paramList = new ListView(this);
+	String[] profileParamArr = new String[profileParam.labelList.size()];
+	final String[] paramListArr = profileParam.labelList.toArray(profileParamArr);
+
+	ArrayAdapter<String> modeAdapter = new ArrayAdapter<String>(this, 
+			android.R.layout.simple_list_item_1, android.R.id.text1, paramListArr);
+	paramList.setAdapter(modeAdapter);
+	paramList.setOnItemClickListener(new OnItemClickListener() {
+		@Override
+	      public void onItemClick(AdapterView<?> parent, View view,
+	    		  int position, long id) {
+				profileParam.value = profileParam.valueList.get(position);
+				String str = paramListArr[position];
+				BlueOrGreenEditFormActivity2.this.socialItem.setValue(str);
+				BlueOrGreenEditFormActivity2.this.expListAdapter.notifyDataSetInvalidated();
+				dialog.cancel();
+			  }
+			});
+	    dialog.setContentView(paramList);
+	    dialog.show();
+	    
+	    //-------- Change Size ----------------------------
+	    Display display = getWindowManager().getDefaultDisplay(); 
+	    int mwidth = display.getWidth();
+	    int mheight = display.getHeight();
+	    
+	    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+	    lp.copyFrom(dialog.getWindow().getAttributes());
+	    lp.width = mwidth - mwidth/10;
+	    lp.height = mheight - mheight/10;
+	    dialog.getWindow().setAttributes(lp);			
+	  }
+
+    
+    
+	@Override
+	public void onClick(View v) {
+		switch(v.getId()) {
+		case R.id.popup_menu:
+			Intent popUpMenuActivity = new Intent(this, PopUpMenuActivity.class);
+			popUpMenuActivity.putExtra("autorisationData", autorisationData);
+			startActivityForResult(popUpMenuActivity, Constants.REQUEST_ACTIVITY_CLOSE_STATE);
+		break;
+		case R.id.second_screen_save_btn_action:
+			saveBtnAction();
+			break;
+		case R.id.wrapper_header_backbutton_lbl:
+			finish();
+			break;
+		}
+	}
+
+
+
+	//
+	//	Save Profile on Server
+	//
+	private void saveBtnAction() {
+		if(!isMain){
+			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+			alertDialogBuilder.setTitle(R.string.edit_param_dialog_label);
+
+			final EditText userInput = new EditText(this);
+			alertDialogBuilder.setView(userInput);
+			userInput.setText(profileName);
+
+			// set dialog message
+			alertDialogBuilder
+					.setCancelable(false)
+					.setNegativeButton(android.R.string.cancel,
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog,
+										int id) {
+									dialog.cancel();
+								}
+							})
+					.setPositiveButton(android.R.string.ok,
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog,
+										int id) {
+									profileName = userInput.getText().toString();
+									updateDataOnServer();
+								}
+							});
+			AlertDialog alertDialog = alertDialogBuilder.create();
+			alertDialog.show();
+		}
+		else
+		{
+			updateDataOnServer();
+		}
+	}
+
+
+	@Override
+	public void onProfileLoad(ProfileMap profileMap) {
+		this.profileMap = profileMap;
+    	ArrayList<String> groupNames = new ArrayList<String>();
+
+    	List<Integer> groupsList = new ArrayList<Integer>();
+    	Resources res = context.getResources();
+
+		socials = new ArrayList<ArrayList<Social>>(); 
+        ArrayList<Social> social = new ArrayList<Social>();
+        
+		// Add all profile item to List
+		for (Entry<String, ProfileParam>  profileParam : profileMap.getProfileParams(form).entrySet()) {
+	        social.add( new Social( profileParam.getValue(), true ) );
+		}
+
+		Collections.sort(social);
+
+		for(Social socialItem: social){
+			int sectionIdx = socialItem.getSectionIdx();
+    		if( !groupsList.contains(sectionIdx) ){
+    			ArrayList<Social> socialA = getListOfSection(social, sectionIdx, screenIdx);
+    			Collections.sort(socialA);	// Sort in proper order
+    			if(socialA != null && socialA.size() > 0){
+    				socialA.add(0, new Social(res.getString(R.string.sectionHelpItem), "", "", sectionIdx, screenIdx, false));
+	    	        groupNames.add( res.getStringArray(R.array.sectionTitleBlueForm)[sectionIdx] );
+	    	        groupsList.add(sectionIdx);	// for escape duplicate loop there is auxiliary List
+	        		socials.add( socialA );
+    			}
+    		}
+		}
+		expListAdapter = new SocialAdapter( this,groupNames, socials );
+		setListAdapter( expListAdapter );
+	}
+
+
+	/*
+	 * 
+	 * Get List Items for one section
+	 * 
+	 * 
+	 */
+	ArrayList<Social> getListOfSection(ArrayList<Social> social, int sectionIdx, int screenIdx){
+    	ArrayList<Social> socialOut = new ArrayList<Social>();
+
+    	for(Social socialItem: social){
+			if( sectionIdx == socialItem.getSectionIdx() && screenIdx == socialItem.getScreenIdx()){
+				socialOut.add(socialItem);
+			}
+		}
+		return socialOut;
+	}
+
+
+    @Override
+    public void onBackPressed() {
+		Intent resultIntent = new Intent();
+		setResult(Constants.NORMAL_CLOSE, resultIntent);
+		finish();
+    }
+
+    @Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		switch(requestCode) {
+	    	case (Constants.REQUEST_ACTIVITY_CLOSE_STATE) : {	// Also can be Constants.EXIT_TO_MAIN_MENU
+	    		if(resultCode != Constants.NORMAL_CLOSE){
+					Intent resultIntent = new Intent();
+					setResult(resultCode, resultIntent);	// Close current form. Send Form to parent
+					finish();
+	    		}
+	    		break;
+	    		}
+	    	}
+	  }
+
+	
+	JSONObject paramsJson = new JSONObject();
+	JSONObject valueJson = new JSONObject();
+	JSONArray valuesJsonArrData = new JSONArray();
+	//
+	//	Send Json Data to Server
+	//
+	private void updateDataOnServer() {
+
+		for(ArrayList<Social> socialParent : socials){
+				for(Social socialItem : socialParent){
+					String key = socialItem.getKey();
+					if("".equals(key))	// First row is help without information
+						continue;
+		    		System.out.println("key=" + key);
+					ProfileParam profileParam = profileMap.getProfileParams(form).get(key);
+					profileMap.setValueForServer(socialItem, profileParam);
+				}
+			}
+		
+		try {
+			for (String key : profileMap.getProfileParams(form).keySet()) {
+	    		System.out.println("key=" + key);
+	    		ProfileParam param = profileMap.getProfileParams(form).get(key);
+	    		if(param.typeValue == ProfileMap.TYPE_VALUE_UNIXTYPE){
+	    			JSONObject valueJson = new JSONObject();
+	    			valueJson.put("Value", Integer.valueOf( param.serverValue ) );
+	    			valuesJsonArrData = new JSONArray();
+	    			if( param.unixTimeList != null && param.unixTimeList.size() > 0 ){
+	    				for(String strTime : param.unixTimeList){
+	    					SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+	    					Date date = (Date)formatter.parse(strTime);
+	    					long timeStampLong = date.getTime();
+	    					valuesJsonArrData.put(timeStampLong/1000);
+	    				}
+	    			}
+	    			valueJson.put("Dates", valuesJsonArrData);
+
+	    			paramsJson.put(key, valueJson);
+	    		}else{
+	    			//
+	    			//	Convert value according typeOf
+	    			//
+	    			switch (param.typeValue) {
+					case ProfileMap.TYPE_VALUE_FLOAT_LIST:
+					case ProfileMap.TYPE_VALUE_FLOAT:
+					case ProfileMap.TYPE_VALUE_INT:
+					case ProfileMap.TYPE_VALUE_INT_LIST:
+					case ProfileMap.TYPE_VALUE_STRING_LIST:
+		    			paramsJson.put(key, Float.valueOf(param.serverValue));
+						break;
+					//case ProfileMap.TYPE_VALUE_INT:
+					//case ProfileMap.TYPE_VALUE_INT_LIST:
+		    		//	paramsJson.put(key, Integer.valueOf(param.serverValue));
+					//	break;
+					default:
+		    			paramsJson.put(key, param.serverValue);
+						break;
+					}
+	    		}
+			}
+			//dataJson.put("Data", paramsJson);
+			//dataJson.put("ErrorMessage","");
+
+			new SendFormProfileToServerTask(this, autorisationData, profileNumber, form, profileName, isMain, paramsJson).execute();
+			
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}  catch (NullPointerException e) {
+			e.printStackTrace();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println(paramsJson.toString());
+	}
+
+
+	@Override
+	public void onProfileSendServer(ProfileMap profileMap) {
+        finish();
+	}
+	
+
+
+}

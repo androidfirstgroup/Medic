@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item 
+        android:id="@+id/one"
+        android:title="Clinic menu"/>
+    <item 
+        android:id="@+id/two"
+        android:title="Hospital menu"/>
+    <item 
+        android:id="@+id/three"
+        android:title="Congress"/>
+     <item 
+        android:id="@+id/four"
+        android:title="Contacts"/>
+     
+      <item 
+        android:id="@+id/exit"
+        android:title="Exit"/>
+</menu>
